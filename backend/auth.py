@@ -18,14 +18,16 @@ oauth.register(
     }
 )
 
-@router.get("/login/google")
+@router.get("/auth/login/google")
 async def login(request: Request):
     redirect_uri = request.url_for("callback")
-    response = await oauth.google.authorize_redirect(request, redirect_uri)
-    print("CLIENT:", GOOGLE_CLIENT_ID)
-    print("CALLBACK:", redirect_uri)
 
-    print(response.headers["location"])
+    response = await oauth.google.authorize_redirect(
+        request,
+        redirect_uri
+    )
+
+    print(response.headers)
 
     return response
 

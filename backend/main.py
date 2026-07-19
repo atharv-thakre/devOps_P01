@@ -18,7 +18,9 @@ app.add_middleware(
 )
 app.add_middleware(
     SessionMiddleware,
-    secret_key="a_long_random_secret_key_here"
+    secret_key="a_long_random_secret_key_here",
+    same_site="lax",
+    https_only=True,
 )
 
 class Message(BaseModel):
@@ -27,6 +29,7 @@ class Message(BaseModel):
 @app.get("/")
 def root():
     return {f"client" : {GOOGLE_CLIENT_ID}, f"secret" : {GOOGLE_CLIENT_SECRET}, f"redirect" : {REDIRECT_URL}}
+
 @app.get("/read")
 def read_message():
     if not msg:
