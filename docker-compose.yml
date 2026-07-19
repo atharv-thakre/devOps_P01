@@ -5,3 +5,7 @@ services:
     ports:
       - "8080"
     restart: unless-stopped
+    environment:
+      GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID}
+      GOOGLE_CLIENT_SECRET: ${GOOGLE_CLIENT_SECRET}
+      REDIRECT_URL: ${REDIRECT_URL}
