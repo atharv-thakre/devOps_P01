@@ -3,6 +3,7 @@ from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
 from starlette.middleware.sessions import SessionMiddleware
 from auth import router as auth_router
+from config import *
 
 
 app = FastAPI()
@@ -23,7 +24,9 @@ app.add_middleware(
 class Message(BaseModel):
     text: str
 
-
+@app.get("/")
+def root():
+    return {f"client" : {GOOGLE_CLIENT_ID}, f"secret" : {GOOGLE_CLIENT_SECRET}, f"redirect" : {REDIRECT_URL}}
 @app.get("/read")
 def read_message():
     if not msg:
