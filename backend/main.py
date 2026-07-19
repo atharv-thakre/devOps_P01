@@ -1,10 +1,12 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
-import uvicorn
+from starlette.middleware.sessions import SessionMiddleware
+from auth import router as auth_router
 
 
 app = FastAPI()
+app.include_router(auth_router)
 msg = []
 
 app.add_middleware(
@@ -13,7 +15,10 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
+app.add_middleware(
+    SessionMiddleware,
+    secret_key="a_long_random_secret_key_here"
+)
 
 class Message(BaseModel):
     text: str
@@ -41,12 +46,13 @@ def send_message(message: Message):
 def read_all():
     return msg
 
-
 def run():
+    import uvicorn
     uvicorn.run(
-        app,
+        "main:app",
         host="0.0.0.0",
-        port=8080
+        port=8080,
+        reload=True,
     )
 
 

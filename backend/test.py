@@ -1,0 +1,5 @@
+from config import *
+
+print (f"GOOGLE_CLIENT_ID = {GOOGLE_CLIENT_ID}")
+print (f"GOOGLE_CLIENT_SECRET = {GOOGLE_CLIENT_SECRET}")
+print (f"REDIRECT_URL = {REDIRECT_URL}")
